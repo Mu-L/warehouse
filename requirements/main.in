@@ -42,7 +42,6 @@ passlib>=1.6.4
 platformdirs>=4.2
 premailer
 psycopg[c]
-pycurl
 pydantic
 pyqrcode
 pyramid>=2.0
@@ -65,7 +64,7 @@ redis>=2.8.0,<6.0.0
 rfc3986
 sentry-sdk
 setuptools
-pypi-attestations==0.0.17
+pypi-attestations==0.0.19
 sqlalchemy[asyncio]>=2.0,<3.0
 stdlib-list
 stripe

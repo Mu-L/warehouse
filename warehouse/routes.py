@@ -28,6 +28,7 @@ def includeme(config):
     # Basic global routes
     config.add_route("index", "/", domain=warehouse)
     config.add_route("locale", "/locale/", domain=warehouse)
+    config.add_route("favicon.ico", "/favicon.ico", domain=warehouse)
     config.add_route("robots.txt", "/robots.txt", domain=warehouse)
     config.add_route("opensearch.xml", "/opensearch.xml", domain=warehouse)
     config.add_route("index.sitemap.xml", "/sitemap.xml", domain=warehouse)
@@ -538,14 +539,18 @@ def includeme(config):
         traverse="/{name}/",
         domain=warehouse,
     )
-    # Integration URLs
 
+    # Integration URLs
     config.add_route(
-        "integrations.github.disclose-token",
+        "integrations.secrets.disclose-token",
+        "/_/secrets/disclose-token",
+        domain=warehouse,
+    )
+    config.add_route(
+        "integrations.github.disclose-token",  # For backwards compatiblity
         "/_/github/disclose-token",
         domain=warehouse,
     )
-
     config.add_route(
         "integrations.vulnerabilities.osv.report",
         "/_/vulnerabilities/osv/report",
