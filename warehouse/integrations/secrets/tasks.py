@@ -10,29 +10,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import pretend
 
-from warehouse.integrations.github import tasks, utils
+from warehouse import tasks
+from warehouse.integrations.secrets import utils
 
 
-def test_analyze_disclosure_task(monkeypatch):
-    analyze_disclosure = pretend.call_recorder(lambda *a, **k: None)
-    monkeypatch.setattr(utils, "analyze_disclosure", analyze_disclosure)
-
-    request = pretend.stub()
-    disclosure_record = pretend.stub()
-    origin = pretend.stub()
-
-    tasks.analyze_disclosure_task(
+@tasks.task(ignore_result=True, acks_late=True)
+def analyze_disclosure_task(request, disclosure_record, origin):
+    origin = utils.DisclosureOrigin.from_dict(origin)
+    utils.analyze_disclosure(
         request=request,
         disclosure_record=disclosure_record,
         origin=origin,
     )
-
-    assert analyze_disclosure.calls == [
-        pretend.call(
-            request=request,
-            disclosure_record=disclosure_record,
-            origin=origin,
-        )
-    ]

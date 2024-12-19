@@ -77,6 +77,7 @@ def test_routes(warehouse):
         pretend.call("force-status", r"/_force-status/{status:[45]\d\d}/"),
         pretend.call("index", "/", domain=warehouse),
         pretend.call("locale", "/locale/", domain=warehouse),
+        pretend.call("favicon.ico", "/favicon.ico", domain=warehouse),
         pretend.call("robots.txt", "/robots.txt", domain=warehouse),
         pretend.call("opensearch.xml", "/opensearch.xml", domain=warehouse),
         pretend.call("index.sitemap.xml", "/sitemap.xml", domain=warehouse),
@@ -529,6 +530,11 @@ def test_routes(warehouse):
             "/rss/project/{name}/releases.xml",
             factory="warehouse.packaging.models:ProjectFactory",
             traverse="/{name}/",
+            domain=warehouse,
+        ),
+        pretend.call(
+            "integrations.secrets.disclose-token",
+            "/_/secrets/disclose-token",
             domain=warehouse,
         ),
         pretend.call(
